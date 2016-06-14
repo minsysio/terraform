@@ -1,0 +1,84 @@
+
+Create instance with no publicIP
+Use other ressource  resource_ip to assign 
+
+Nota : check ansible terraform_tfstate inventory mapping 
+https://github.com/CiscoCloud/terraform.py/blob/master/terraform.py
+https://github.com/adammck/terraform-inventory
+
+root@terraform-test:/opt/terraform/conf# terraform plan -var-file=test.tfvars
+Refreshing Terraform state prior to plan...
+
+
+The Terraform execution plan has been generated and is shown below.
+Resources are shown in alphabetical order for quick scanning. Green resources
+will be created (or destroyed and then created if an existing resource
+exists), yellow resources are being changed in-place, and red resources
+will be destroyed.
+
+Note: You didn't specify an "-out" parameter to save this plan, so when
+"apply" is called, Terraform can't guarantee this is what will execute.
+
++ scaleway_server.newhost01
+    image:                "" => "aecaed73-51a5-4439-a127-6d8229847145"
+    ipv4_address_private: "" => "<computed>"
+    name:                 "" => "newhost"
+    state:                "" => "<computed>"
+    state_detail:         "" => "<computed>"
+    type:                 "" => "VC1S"
+
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+root@terraform-test:/opt/terraform/conf# terraform apply -var-file=test.tfvars
+scaleway_server.newhost01: Creating...
+  image:                "" => "aecaed73-51a5-4439-a127-6d8229847145"
+  ipv4_address_private: "" => "<computed>"
+  name:                 "" => "newhost"
+  state:                "" => "<computed>"
+  state_detail:         "" => "<computed>"
+  type:                 "" => "VC1S"
+scaleway_server.newhost01: Still creating... (10s elapsed)
+scaleway_server.newhost01: Still creating... (20s elapsed)
+scaleway_server.newhost01: Still creating... (30s elapsed)
+scaleway_server.newhost01: Still creating... (40s elapsed)
+scaleway_server.newhost01: Still creating... (50s elapsed)
+scaleway_server.newhost01: Still creating... (1m0s elapsed)
+scaleway_server.newhost01: Still creating... (1m10s elapsed)
+scaleway_server.newhost01: Still creating... (1m20s elapsed)
+scaleway_server.newhost01: Creation complete
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+The state of your infrastructure has been saved to the path
+below. This state is required to modify and destroy your
+infrastructure, so keep it safe. To inspect the complete state
+use the `terraform show` command.
+
+
+root@terraform-test:/opt/terraform/conf# terraform show
+scaleway_server.newhost01:
+  id = 80373b2a-c043-4a21-a6f9-c8863eca14aa
+  image = aecaed73-51a5-4439-a127-6d8229847145
+  ipv4_address_private = 10.2.140.13
+  name = newhost
+  state = running
+  state_detail = booted
+  type = VC1S
+
+
+root@terraform-test:/opt/terraform/conf# terraform destroy -var-file=test.tfvars
+Do you really want to destroy?
+  Terraform will delete all your managed infrastructure.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+scaleway_server.newhost01: Refreshing state... (ID: 80373b2a-c043-4a21-a6f9-c8863eca14aa)
+scaleway_server.newhost01: Destroying...
+scaleway_server.newhost01: Destruction complete
+
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
+
+
+
+
